@@ -1,7 +1,9 @@
 const videoElement = document.getElementsByClassName("input_video")[0];
 const canvasElement = document.getElementsByClassName("output_canvas")[0];
 const canvasCtx = canvasElement.getContext("2d");
-let arrow = null;
+let arrow = null
+
+
 
 async function onResults(results) {
   canvasCtx.save();
@@ -13,6 +15,7 @@ async function onResults(results) {
     canvasElement.width,
     canvasElement.height
   );
+
   if (results.multiHandLandmarks) {
     for (const landmarks of results.multiHandLandmarks) {
       drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
@@ -23,15 +26,15 @@ async function onResults(results) {
         color: "#FF0000",
         lineWidth: 2,
       });
+
       const arrow = await getPredictedLabel(landmarks);
       if (arrow) {
         triggerArrowKey("keydown", arrow);
-        setTimeout(() => {
-          triggerArrowKey("keyup", arrow);
-        }, 100);
+        setTimeout(() => triggerArrowKey("keyup", arrow), 100);
       }
     }
   }
+
   canvasCtx.restore();
 }
 
